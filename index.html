@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home | Titunique Security Services</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Additional styles for enhanced sections - maintains consistency with original design */
+        :root {
+            --primary-green: #2e7d32;
+            --dark-green: #1b5e20;
+            --accent-gold: #ffb74d;
+            --text-dark: #1e2a2e;
+            --text-light: #4a5b5e;
+            --white: #ffffff;
+            --light-gray: #f5f7f6;
+            --medium-gray: #e0e5e2;
+            --shadow-sm: 0 5px 20px rgba(0,0,0,0.05);
+            --shadow-md: 0 8px 25px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+
+        /* Hero section with visible background image */
+        .hero {
+            text-align: center;
+            padding: 6rem 2rem;
+            /* Dark gradient overlay on top of the Armed & Patrol vehicles image */
+            background: linear-gradient(135deg, rgba(108, 163, 94, 0.65) 0%, rgba(40, 77, 40, 0.75) 100%), url("assets/images/Armed & Patrol vehicles.png");
+            background-size: cover;
+            background-position: center right;
+            background-repeat: no-repeat;
+            background-blend-mode: overlay;
+            color: var(--white);
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            letter-spacing: 2px;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+        }
+
+        /* Services preview grid */
+        .services-preview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .service-item {
+            background: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            text-align: center;
+            padding-bottom: 1.5rem;
+        }
+        .service-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+        .service-img {
+            height: 200px;
+            overflow: hidden;
+        }
+        .service-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .service-item:hover .service-img img {
+            transform: scale(1.05);
+        }
+        .service-item h3 {
+            margin: 1rem 0 0.5rem;
+            color: var(--dark-green);
+        }
+        .service-item p {
+            padding: 0 1rem;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* Projects grid */
+        .projects-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .project-item {
+            background: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+        .project-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+        .project-img {
+            height: 220px;
+            overflow: hidden;
+        }
+        .project-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .project-item:hover .project-img img {
+            transform: scale(1.05);
+        }
+        .project-info {
+            padding: 1.2rem;
+        }
+        .project-info h3 {
+            color: var(--dark-green);
+            margin-bottom: 0.3rem;
+        }
+        .project-location {
+            color: var(--primary-green);
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .project-info p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* Contact info section */
+        .contact-info-section {
+            background: var(--light-gray);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+        .contact-card {
+            text-align: center;
+            padding: 1rem;
+        }
+        .contact-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .contact-card h4 {
+            color: var(--dark-green);
+            margin-bottom: 0.5rem;
+        }
+        .contact-card p, .contact-card a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        .contact-card a:hover {
+            color: var(--primary-green);
+        }
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        .social-links a {
+            font-size: 1.5rem;
+            color: var(--primary-green);
+            transition: var(--transition);
+            text-decoration: none;
+        }
+        .social-links a:hover {
+            color: var(--dark-green);
+            transform: translateY(-3px);
+        }
+
+        /* CTA button */
+        .cta-button {
+            display: inline-block;
+            background: var(--primary-green);
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            margin-top: 1rem;
+        }
+        .cta-button:hover {
+            background: var(--dark-green);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(46,125,50,0.3);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
+            color: var(--dark-green);
+            position: relative;
+        }
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--primary-green);
+            margin: 0.8rem auto 0;
+            border-radius: 2px;
+        }
+        .section-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .view-all-link {
+            text-align: center;
+            margin-top: 2rem;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .card {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            text-align: center;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+        .card h3 {
+            color: var(--dark-green);
+            margin-bottom: 0.8rem;
+        }
+        .card p {
+            color: var(--text-light);
+        }
+
+        /* Remove header-specific inline styles so style.css controls the header */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+            nav ul {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 80%;
+                height: calc(100% - 80px);
+                background: white;
+                flex-direction: column;
+                padding: 2rem;
+                transition: 0.3s;
+                box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+                z-index: 1000;
+                gap: 1.5rem;
+            }
+            nav ul.open {
+                left: 0;
+            }
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            .section-title {
+                font-size: 1.8rem;
+            }
+        }
+        /* Loader */
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--white);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s;
+        }
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid var(--medium-gray);
+            border-top: 5px solid var(--primary-green);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div id="loader"><div class="spinner"></div></div>
+
+    <header>
+        <div class="logo-container">
+            <a href="index.html">
+                <img src="assets/images/logo.png" alt="Titunique Security Services Logo" onerror="this.src='https://placehold.co/200x80?text=Titunique+Security'">
+            </a>
+        </div>
+        <button class="menu-toggle" aria-label="Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <nav>
+            <ul>
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="Project.html">Project</a></li>
+                <li><a href="Shop.html">Shop</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h3 id="slogan">Guarding Trust, Securing Futures!</h3>
+        
+        <section class="hero">
+            <h1>TITUNIQUE SECURITY SERVICES</h1>
+            <p>Your trusted partner in comprehensive security solutions across South Africa</p>
+        </section>
+
+        <!-- Our Security Services Section (now placed above Why Choose Us) -->
+        <section style="margin-top: 3rem;">
+            <div class="section-header">
+                <h2 class="section-title">Our Security Services</h2>
+                <p style="max-width: 800px; margin: 0 auto; color: var(--text-light);">Comprehensive protection tailored to your specific needs</p>
+            </div>
+            <div class="services-preview">
+                <div class="service-item">
+                    <div class="service-img">
+                        <img src="assets/images/CCTV & Monitoring.jpg" alt="CCTV Surveillance" onerror="this.src='https://placehold.co/400x200?text=CCTV'">
+                    </div>
+                    <h3>CCTV Surveillance</h3>
+                    <p>24/7 high-definition monitoring with remote access and motion detection.</p>
+                </div>
+                <div class="service-item">
+                    <div class="service-img">
+                        <img src="assets/images/armedPatrol.jpg" alt="Armed Response" onerror="this.src='https://placehold.co/400x200?text=Armed+Response'">
+                    </div>
+                    <h3>Armed Response</h3>
+                    <p>Rapid deployment armed units for emergency situations and proactive patrols.</p>
+                </div>
+                <div class="service-item">
+                    <div class="service-img">
+                        <img src="assets/images/Smart Access Control System.jpg" alt="Access Control" onerror="this.src='https://placehold.co/400x200?text=Access+Control'">
+                    </div>
+                    <h3>Access Control</h3>
+                    <p>Biometric and keycard systems for complete entry management.</p>
+                </div>
+                <div class="service-item">
+                    <div class="service-img">
+                        <img src="assets/images/Alarm Systems.jpg" alt="Alarm Systems" onerror="this.src='https://placehold.co/400x200?text=Alarm+Systems'">
+                    </div>
+                    <h3>Alarm Systems</h3>
+                    <p>Wireless and wired alarm systems with 24/7 monitoring connection.</p>
+                </div>
+            </div>
+            <div class="view-all-link">
+                <a href="services.html" class="cta-button">View All Services →</a>
+            </div>
+        </section>
+        <!-- Featured Projects -->
+          <section style="margin-top: 4rem;">
+            <div class="section-header">
+                <h2 class="section-title">Recent Projects</h2>
+                <p style="max-width: 800px; margin: 0 auto; color: var(--text-light);">Delivering excellence across residential, commercial, and institutional sectors</p>
+            </div>
+            <div class="projects-showcase">
+                <div class="project-item">
+                    <div class="project-img">
+                        <img src="assets/images/projects/home.jpg" alt="Residential Project" onerror="this.src='https://placehold.co/400x220?text=Home+Security'">
+                    </div>
+                    <div class="project-info">
+                        <h3>Residential Security Suite</h3>
+                        <div class="project-location">📍 Seshego zone 2</div>
+                        <p>Complete home security with perimeter beams, smart alarms, and mobile access control.</p>
+                    </div>
+                </div>
+                <div class="project-item">
+                    <div class="project-img">
+                        <img src="assets/images/projects/office.jpg" alt="Office Project" onerror="this.src='https://placehold.co/400x220?text=Office+Security'">
+                    </div>
+                    <div class="project-info">
+                        <h3>Corporate Headquarters</h3>
+                        <div class="project-location">📍 Lithuli</div>
+                        <p>Biometric access control, elevator restrictions, and centralized monitoring for a corporate building.</p>
+                    </div>
+                </div>
+                <div class="project-item">
+                    <div class="project-img">
+                        <img src="assets/images/projects/school.jpg" alt="School Project" onerror="this.src='https://placehold.co/400x220?text=School+Security'">
+                    </div>
+                    <div class="project-info">
+                        <h3>School Campus Safety</h3>
+                        <div class="project-location">📍 Thorn Hill</div>
+                        <p>Visitor management, panic alarms, perimeter fencing, and AI-based threat detection.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="view-all-link">
+                <a href="Project.html" class="cta-button">View All Projects →</a>
+            </div>
+        </section>
+
+
+        <!-- Why Choose Us Section (moved below services) -->
+        <section style="margin-top: 4rem;">
+            <h2 class="section-title">Why Choose Us?</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>24/7 Monitoring</h3>
+                    <p>Round-the-clock surveillance and monitoring to keep your property safe at all times.</p>
+                </div>
+                <div class="card">
+                    <h3>Professional Team</h3>
+                    <p>Highly trained security personnel dedicated to protecting what matters most to you.</p>
+                </div>
+                <div class="card">
+                    <h3>Advanced Technology</h3>
+                    <p>State-of-the-art CCTV systems and security solutions for comprehensive protection.</p>
+                </div>
+                <div class="card">
+                    <h3>Rapid Response</h3>
+                    <p>Armed response teams ready to act quickly in case of any security incident.</p>
+                </div>
+            </div>
+        </section>
+
+        
+       
+        <!-- Contact Information Section -->
+        <section style="margin-top: 4rem;">
+            <div class="section-header">
+                <h2 class="section-title">Get In Touch</h2>
+                <p style="max-width: 800px; margin: 0 auto; color: var(--text-light);">Reach out to us for consultations, quotes, or emergency support</p>
+            </div>
+            <div class="contact-info-section">
+                <div class="contact-grid">
+                    <div class="contact-card">
+                        <div class="contact-icon">📍</div>
+                        <h4>Visit Us</h4>
+                        <p>597 Seshego 9L
+<br>Polokwane, 0699<br>South Africa</p>
+                    </div>
+                    <div class="contact-card">
+                        <div class="contact-icon">📞</div>
+                        <h4>Call Us</h4>
+                        <p>+27 72 779 2686</p>
+                       
+                    </div>
+                    <div class="contact-card">
+                        <div class="contact-icon">✉️</div>
+                        <h4>Email Us</h4>
+                        <p><a href="mailto:info@titunique.co.za">info@titunique.co.za</a></p>
+                        <p><a href="mailto:sales@titunique.co.za">sales@titunique.co.za</a></p>
+                    </div>
+                    <div class="contact-card">
+                        <div class="contact-icon">🕒</div>
+                        <h4>Business Hours</h4>
+                        <p>Mon-Fri: 8:00 - 17:00</p>
+                        <p>24/7 Emergency Support</p>
+                    </div>
+                </div>
+      <!--          <div class="social-links">
+                    <a href="#" aria-label="Facebook">📘</a>
+                    <a href="#" aria-label="Twitter">🐦</a>
+                    <a href="#" aria-label="LinkedIn">🔗</a>
+                    <a href="#" aria-label="Instagram">📷</a>
+                    <a href="#" aria-label="WhatsApp">💬</a>
+                </div> 
+                -->
+            </div>
+        </section>
+
+        <!-- Call to Action -->
+        <section style="text-align: center; margin: 4rem 0 2rem;">
+            <h2 class="section-title">Need a Custom Security Solution?</h2>
+            <p style="max-width: 800px; margin: 0 auto 1.5rem; font-size: 1.1rem; color: var(--text-light);">
+                Let us design a security system tailored specifically to your property, business, or event.
+            </p>
+            <a href="contact.html" class="cta-button">Request a Free Quote →</a>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2026 Titunique Security Services. All rights reserved.</p>
+            <p>Guarding Trust, Securing Futures!</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop | Titunique Security Services</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <div id="loader"><div class="spinner"></div></div>
+
+    <header>
+        <div class="logo-container">
+            <a href="index.html">
+                <img src="assets/images/logo.png" alt="Titunique Security Services Logo" onerror="this.src='https://placehold.co/200x80?text=Titunique+Security'">
+            </a>
+        </div>
+        <button class="menu-toggle" aria-label="Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="Project.html">Project</a></li>
+                <li><a href="Shop.html" class="active">Shop</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="shop-header">
+            <h1>🛡️ Our Security Solutions</h1>
+            <p>Professional-grade security services & systems — tailored for complete protection</p>
+        </div>
+
+        <!-- filter categories based on security domains -->
+        <div class="filter-bar" id="filterBar">
+            <button class="filter-chip active" data-category="all">All Services</button>
+            <button class="filter-chip" data-category="surveillance">CCTV & Monitoring</button>
+            <button class="filter-chip" data-category="access">Access & Perimeter</button>
+            <button class="filter-chip" data-category="response">Armed & Patrol</button>
+            <button class="filter-chip" data-category="protection">VIP & Protection</button>
+            <button class="filter-chip" data-category="industrial">Industrial & Warehouse</button>
+        </div>
+
+        <div class="products-grid" id="productsGrid"></div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2026 Titunique Security Services. All rights reserved.</p>
+            <p>Guarding Trust, Securing Futures!</p>
+        </div>
+    </footer>
+
+    <script>
+        // ========= SECURITY SERVICES DATA WITH IMAGES (no pricing, no cart) ==========
+        // Images located in assets/images/ as per requirement.
+        // Only services that have corresponding images are included.
+        const securityServices = [
+            {
+                id: 1,
+                name: "Industrial & Warehouse Security",
+                category: "industrial",
+                desc: "Comprehensive security solutions for industrial sites, warehouses and logistics centers. Includes risk assessment, thermal cameras, access control, and 24/7 monitoring.",
+                image: "assets/images/Industrial & Warehouse Security.jpg",
+                feature: "✓ Thermal imaging • 24/7 control room • Perimeter defense"
+            },
+            {
+                id: 2,
+                name: "Gate & Boom Automation",
+                category: "access",
+                desc: "Automated gate and boom barrier systems with remote access, vehicle recognition, and safety sensors. Ideal for residential estates, corporate parks, and restricted zones.",
+                image: "assets/images/Gate & Boom Automation.jpg.jpg",
+                feature: "✓ Heavy-duty motors • Remote opening • Safety beams"
+            },
+            {
+                id: 3,
+                name: "Alarm Systems",
+                category: "surveillance",
+                desc: "Smart wireless and wired alarm systems with intrusion detection, motion sensors, door/window contacts, and mobile alerts. Professional monitoring available.",
+                image: "assets/images/Alarm Systems.jpg",
+                feature: "✓ 24/7 mobile alerts • Panic buttons • Cloud backup"
+            },
+            {
+                id: 4,
+                name: "VIP Executive Protection",
+                category: "protection",
+                desc: "High-level close protection for executives, dignitaries, and celebrities. Trained agents, route security, and risk management tailored to client needs.",
+                image: "assets/images/VIP Executive Protection.jpg",
+                feature: "✓ Armed/Unarmed options • Advance security sweeps • Discreet"
+            },
+            {
+                id: 5,
+                name: "Electric Fencing Energizer",
+                category: "access",
+                desc: "High-security electric fence energizers with anti-cut detection, alarm integration, and weatherproof design. Compliant with safety regulations.",
+                image: "assets/images/Electric Fencing Energizer.jpg",
+                feature: "✓ 8-12 Joule output • Remote monitoring • Surge protection"
+            },
+            {
+                id: 6,
+                name: "Wireless Alarm System",
+                category: "surveillance",
+                desc: "Easy-install wireless alarm kit with motion detectors, magnetic contacts, siren, and smartphone control. Expandable for larger premises.",
+                image: "assets/images/Wireless Alarm System.jpg",
+                feature: "✓ No wiring hassle • App control • 2-year battery life"
+            },
+            {
+                id: 7,
+                name: "Smart Access Control System",
+                category: "access",
+                desc: "Biometric, RFID, and mobile-based access control. Manage user permissions, audit logs, and integrate with CCTV for enhanced security.",
+                image: "assets/images/Smart Access Control System.jpg",
+                feature: "✓ Facial recognition • Cloud management • Time attendance"
+            },
+            {
+                id: 8,
+                name: "Armed & Patrol Vehicles",
+                category: "response",
+                desc: "Rapid response armed patrol vehicles with GPS tracking, two-way radio, and emergency equipment. Visible deterrent and fast reaction time.",
+                image: "assets/images/Armed & Patrol vehicles.png",
+                feature: "✓ 24/7 patrolling • Geofencing • Armed response certified"
+            },
+            {
+                id: 9,
+                name: "Armed Response Team",
+                category: "response",
+                desc: "Specialized armed response units trained for emergency situations. Panic button integration, rapid deployment, and coordinated backup.",
+                image: "assets/images/armedPatrol.jpg",
+                feature: "✓ 5-minute average response • Backup support • Licensed officers"
+            },
+            {
+                id: 10,
+                name: "CCTV Surveillance & Monitoring",
+                category: "surveillance",
+                desc: "High-definition CCTV systems with night vision, motion tracking, and remote access. Professional monitoring center with real-time alerts.",
+                image: "assets/images/CCTV & Monitoring.jpg",
+                feature: "✓ 4K resolution • 24/7 recording • Mobile viewing"
+            }
+        ];
+
+        // DOM elements
+        const productsGrid = document.getElementById("productsGrid");
+        const filterChips = document.querySelectorAll(".filter-chip");
+
+        let activeFilter = "all";
+
+        // Helper: get readable category label
+        function getCategoryLabel(cat) {
+            
+            const labels = {
+                surveillance: "CCTV & Monitoring",
+                access: "Access & Perimeter",
+                response: "Armed Response & Patrol",
+                protection: "VIP & Executive Protection",
+                industrial: "Industrial & Warehouse"
+            };
+            return labels[cat] || "Security Service";
+        }
+
+        // Function to handle image error (fallback)
+        function handleImageError(imgElement) {
+            imgElement.onerror = null;
+            const parent = imgElement.parentElement;
+            const fallbackDiv = document.createElement('div');
+            fallbackDiv.className = 'fallback-icon';
+            // Set a meaningful icon based on service type
+            fallbackDiv.innerHTML = '🛡️';
+            fallbackDiv.style.fontSize = '4rem';
+            fallbackDiv.style.background = '#c8e6c9';
+            fallbackDiv.style.display = 'flex';
+            fallbackDiv.style.alignItems = 'center';
+            fallbackDiv.style.justifyContent = 'center';
+            fallbackDiv.style.width = '100%';
+            fallbackDiv.style.height = '100%';
+            if (parent) {
+                imgElement.style.display = 'none';
+                parent.appendChild(fallbackDiv);
+            }
+        }
+
+        // Render products based on filter
+        function renderProducts() {
+            let filtered = securityServices;
+            if (activeFilter !== "all") {
+                filtered = securityServices.filter(service => service.category === activeFilter);
+            }
+            
+            if (productsGrid) {
+                if (filtered.length === 0) {
+                    productsGrid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:3rem; color:var(--text-light);">No security services match this category. Please try another filter.</div>`;
+                    return;
+                }
+                
+                productsGrid.innerHTML = filtered.map(service => `
+                    <div class="product-card" data-id="${service.id}">
+                        <div class="product-img">
+                            <img src="${service.image}" alt="${service.name}" onerror="handleImageError(this)">
+                        </div>
+                        <div class="product-info">
+                            <div class="product-category">${getCategoryLabel(service.category)}</div>
+                            <div class="product-title">${service.name}</div>
+                            <div class="product-desc">${service.desc}</div>
+                            <div class="service-feature">${service.feature}</div>
+                        </div> 
+                    </div>
+                `).join('');
+                
+                // Re-attach image error handlers after render (some images might still fail)
+                document.querySelectorAll('.product-img img').forEach(img => {
+                    img.addEventListener('error', function() {
+                        handleImageError(this);
+                    });
+                });
+            }
+        }
+
+        // Filter event listeners
+        filterChips.forEach(chip => {
+            chip.addEventListener('click', () => {
+                filterChips.forEach(c => c.classList.remove('active'));
+                chip.classList.add('active');
+                activeFilter = chip.getAttribute('data-category');
+                renderProducts();
+            });
+        });
+
+        // Mobile menu toggle functionality
+     /* <!--  const menuToggle = document.querySelector('.menu-toggle');
+        const navUl = document.querySelector('nav ul');
+        if (menuToggle && navUl) {
+            menuToggle.addEventListener('click', () => {
+                navUl.classList.toggle('open');
+                const spans = menuToggle.querySelectorAll('span');
+                if (navUl.classList.contains('open')) {
+                    spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+                    spans[1].style.opacity = '0';
+                    spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+                } else {
+                    spans[0].style.transform = 'none';
+                    spans[1].style.opacity = '1';
+                    spans[2].style.transform = 'none';
+                }
+            });
+        }  --> */ 
+
+        // Close mobile menu when clicking a link
+        const navLinks = document.querySelectorAll('nav ul li a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (navUl.classList.contains('open')) {
+                    navUl.classList.remove('open');
+                    const spans = menuToggle.querySelectorAll('span');
+                    spans[0].style.transform = 'none';
+                    spans[1].style.opacity = '1';
+                    spans[2].style.transform = 'none';
+                }
+            });
+        });
+
+        // Initial render
+        renderProducts();
+
+        // Loader removal
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader');
+            if (loader) {
+                setTimeout(() => {
+                    loader.style.opacity = '0';
+                    setTimeout(() => {
+                        loader.style.display = 'none';
+                    }, 300);
+                }, 400);
+            }
+        });
+    </script>
+</body>
+</html>

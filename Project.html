@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects | Titunique Security Services</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* === Additional inline styles to maintain consistency with Home page === */
+        :root {
+            --primary-green: #2e7d32;
+            --dark-green: #1b5e20;
+            --accent-gold: #ffb74d;
+            --text-dark: #1e2a2e;
+            --text-light: #4a5b5e;
+            --white: #ffffff;
+            --light-gray: #f5f7f6;
+            --medium-gray: #e0e5e2;
+            --shadow-sm: 0 5px 20px rgba(0,0,0,0.05);
+            --shadow-md: 0 8px 25px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background-color: var(--white);
+            color: var(--text-dark);
+            line-height: 1.5;
+        }
+
+        /* Loader */
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--white);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s;
+        }
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid var(--medium-gray);
+            border-top: 5px solid var(--primary-green);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Header & Navigation */
+        /* Header styling is now centralized in style.css to ensure a consistent dark header across all pages. */
+
+        /* Main Layout */
+        main {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        .projects-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .projects-header h1 {
+            font-size: 2.8rem;
+            color: var(--dark-green);
+            margin-bottom: 0.8rem;
+        }
+        .projects-header p {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Section Title (matching home page) */
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
+            color: var(--dark-green);
+            position: relative;
+        }
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--primary-green);
+            margin: 0.8rem auto 0;
+            border-radius: 2px;
+        }
+
+        /* Filter Bar */
+        .filter-bar {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.8rem;
+            margin-bottom: 3rem;
+        }
+        .filter-chip {
+            background: var(--light-gray);
+            border: none;
+            padding: 0.6rem 1.4rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--text-dark);
+        }
+        .filter-chip.active, .filter-chip:hover {
+            background: var(--primary-green);
+            color: white;
+            box-shadow: 0 4px 10px rgba(46,125,50,0.3);
+        }
+
+        /* Projects Grid (similar to home page grid) */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+        .project-card {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            border: 1px solid var(--medium-gray);
+            display: flex;
+            flex-direction: column;
+        }
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-md);
+        }
+        .project-img {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            height: 240px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+        .project-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+        .project-card:hover .project-img img {
+            transform: scale(1.03);
+        }
+        .project-info {
+            padding: 1.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .project-category {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+            color: var(--primary-green);
+            margin-bottom: 0.5rem;
+        }
+        .project-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+        .project-location {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.85rem;
+            color: var(--primary-green);
+            font-weight: 500;
+            margin-bottom: 1rem;
+            background: var(--light-gray);
+            padding: 0.3rem 0.8rem;
+            border-radius: 30px;
+            width: fit-content;
+        }
+        .project-desc {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+        .project-feature {
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--dark-green);
+            font-weight: 500;
+            border-top: 1px solid var(--medium-gray);
+            padding-top: 0.8rem;
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+        .project-feature span {
+            background: #e8f5e9;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+        }
+
+        /* CTA Button (matching home page) */
+        .cta-button {
+            display: inline-block;
+            background: var(--primary-green);
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            margin-top: 1rem;
+        }
+        .cta-button:hover {
+            background: var(--dark-green);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(46,125,50,0.3);
+        }
+
+        footer {
+            background: var(--text-dark);
+            color: var(--medium-gray);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+        .footer-content p {
+            margin: 0.3rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+            nav ul {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 80%;
+                height: calc(100% - 80px);
+                background: white;
+                flex-direction: column;
+                padding: 2rem;
+                transition: 0.3s;
+                box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+                z-index: 1000;
+                gap: 1.5rem;
+            }
+            nav ul.open {
+                left: 0;
+            }
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            .projects-header h1 {
+                font-size: 2rem;
+            }
+            .filter-bar {
+                gap: 0.5rem;
+            }
+            .filter-chip {
+                padding: 0.4rem 1rem;
+                font-size: 0.8rem;
+            }
+            .section-title {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* Fallback styling */
+        .project-img .fallback-icon {
+            font-size: 4rem;
+            color: var(--dark-green);
+            background: rgba(255,255,240,0.6);
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="loader"><div class="spinner"></div></div>
+
+    <header>
+        <div class="logo-container">
+            <a href="index.html">
+                <img src="assets/images/logo.png" alt="Titunique Security Services Logo" onerror="this.src='https://placehold.co/200x80?text=Titunique+Security'">
+            </a>
+        </div>
+        <button class="menu-toggle" aria-label="Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="Project.html" class="active">Project</a></li>
+                <li><a href="Shop.html">Shop</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="projects-header">
+            <h1>Our Completed Projects</h1>
+            <p>Delivering excellence across communities — trusted security solutions for homes, businesses, and institutions</p>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="filter-bar" id="filterBar">
+            <button class="filter-chip active" data-category="all">All Projects</button>
+            <button class="filter-chip" data-category="home">🏠 Homes</button>
+            <button class="filter-chip" data-category="office">🏢 Offices</button>
+            <button class="filter-chip" data-category="shop">🛍️ Shops</button>
+            <button class="filter-chip" data-category="healthcare">🏥 Healthcare</button>
+            <button class="filter-chip" data-category="restaurant">🍽️ Restaurants</button>
+            <button class="filter-chip" data-category="school">📚 Schools</button>
+        </div>
+
+        <div class="projects-grid" id="projectsGrid"></div>
+
+        <!-- CTA Section matching home page style -->
+        <section style="text-align: center; margin-top: 2rem; margin-bottom: 2rem;">
+            <h2 class="section-title">Need a Custom Solution?</h2>
+            <p style="max-width: 800px; margin: 0 auto 1rem; font-size: 1.1rem; color: #666;">
+                Let us design a security system tailored to your specific needs.
+            </p>
+            <a href="contact.html" class="cta-button">Contact Us Today</a>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2026 Titunique Security Services. All rights reserved.</p>
+            <p>Guarding Trust, Securing Futures!</p>
+        </div>
+    </footer>
+
+    <script>
+        // ========= PROJECTS DATA ==========
+        // Categories: Homes, Offices, Shops, Healthcare, Restaurants, Schools
+        // Locations: Seshego zone 2, Lithuli, Madiba Park, Bendor, Penina Park, Thorn Hill
+        // Images stored in assets/images/projects/
+        const projectsData = [
+            {
+                id: 1,
+                name: "Residential Security Suite",
+                category: "home",
+                title: "Luxury Home Protection",
+                location: "Seshego zone 2",
+                description: "Complete residential security solution including CCTV cameras, perimeter beams, and 24/7 alarm monitoring for a 5-bedroom home.",
+                image: "assets/images/projects/home.jpg",
+                features: ["Perimeter Beams", "Smart Alarms", "Mobile Access"]
+            },
+            {
+                id: 2,
+                name: "Corporate Office Security",
+                category: "office",
+                title: "Business Headquarters",
+                location: "Lithuli",
+                description: "Enterprise-grade security with biometric access control, elevator restrictions, and centralized monitoring for a corporate building.",
+                image: "assets/images/projects/office.jpg",
+                features: ["Biometric Access", "Visitor Management", "Control Room"]
+            },
+            {
+                id: 3,
+                name: "Retail Store Protection",
+                category: "shop",
+                title: "Shopping Center Security",
+                location: "Madiba Park",
+                description: "Comprehensive loss prevention system with HD cameras, EAS gates, and panic buttons for staff safety in a busy retail store.",
+                image: "assets/images/projects/shop.jpg",
+                features: ["Anti-Theft", "HD Surveillance", "Emergency Alerts"]
+            },
+            {
+                id: 4,
+                name: "Medical Facility Security",
+                category: "healthcare",
+                title: "Clinic & Pharmacy Protection",
+                location: "Bendor",
+                description: "Specialized security for a healthcare facility including drug storage monitoring, patient wandering prevention, and emergency response.",
+                image: "assets/images/projects/healthcare.jpg",
+                features: ["Asset Tracking", "Patient Safety", "Compliance"]
+            },
+            {
+                id: 5,
+                name: "Restaurant Security System",
+                category: "restaurant",
+                title: "Fine Dining Establishment",
+                location: "Penina Park",
+                description: "Complete security overhaul for a popular restaurant: kitchen surveillance, cash handling protection, and after-hours intrusion detection.",
+                image: "assets/images/projects/restuarant.jpg",
+                features: ["Kitchen Cams", "Cash Protection", "After-hours Alarms"]
+            },
+            {
+                id: 6,
+                name: "School Campus Safety",
+                category: "school",
+                title: "Educational Institution",
+                location: "Thorn Hill",
+                description: "End-to-end school safety solution: visitor management, panic alarms, perimeter fencing, and AI-based threat detection.",
+                image: "assets/images/projects/school.jpg",
+                features: ["Visitor Log", "Lockdown Ready", "Perimeter Defense"]
+            },
+            // Additional project for Homes (different location)
+            {
+                id: 7,
+                name: "Estate Security Upgrade",
+                category: "home",
+                title: "Gated Community Protection",
+                location: "Lithuli",
+                description: "Full perimeter protection, electric fencing, boom gate automation, and 24/7 guard patrols for a residential estate.",
+                image: "assets/images/projects/home.jpg",
+                features: ["Gate Automation", "Patrol Services", "Intercom System"]
+            },
+            // Additional Office project
+            {
+                id: 8,
+                name: "Office Complex Security",
+                category: "office",
+                title: "Multi-Tenant Office Park",
+                location: "Seshego zone 2",
+                description: "Centralized access control for 10+ businesses with shared parking and after-hours security protocols.",
+                image: "assets/images/projects/office.jpg",
+                features: ["Shared Access", "Parking Security", "Night Patrol"]
+            }
+        ];
+
+        // DOM elements
+        const projectsGrid = document.getElementById("projectsGrid");
+        const filterChips = document.querySelectorAll(".filter-chip");
+        let activeFilter = "all";
+
+        // Helper: category display name
+        function getCategoryDisplay(cat) {
+            const map = {
+                home: "Residential",
+                office: "Commercial Office",
+                shop: "Retail & Shop",
+                healthcare: "Healthcare Facility",
+                restaurant: "Restaurant",
+                school: "Educational"
+            };
+            return map[cat] || "Project";
+        }
+
+        // Handle image error (fallback)
+        function handleImageError(imgElement) {
+            imgElement.onerror = null;
+            const parent = imgElement.parentElement;
+            if (parent && !parent.querySelector('.fallback-icon')) {
+                imgElement.style.display = 'none';
+                const fallbackDiv = document.createElement('div');
+                fallbackDiv.className = 'fallback-icon';
+                fallbackDiv.innerHTML = '🔒';
+                fallbackDiv.style.fontSize = '4rem';
+                fallbackDiv.style.background = '#c8e6c9';
+                fallbackDiv.style.display = 'flex';
+                fallbackDiv.style.alignItems = 'center';
+                fallbackDiv.style.justifyContent = 'center';
+                fallbackDiv.style.width = '100%';
+                fallbackDiv.style.height = '100%';
+                parent.appendChild(fallbackDiv);
+            }
+        }
+
+        // Render projects based on active filter
+        function renderProjects() {
+            let filtered = projectsData;
+            if (activeFilter !== "all") {
+                filtered = projectsData.filter(project => project.category === activeFilter);
+            }
+            
+            if (projectsGrid) {
+                if (filtered.length === 0) {
+                    projectsGrid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:3rem; color:var(--text-light);">No projects found in this category. Please try another filter.</div>`;
+                    return;
+                }
+                
+                projectsGrid.innerHTML = filtered.map(project => `
+                    <div class="project-card" data-id="${project.id}">
+                        <div class="project-img">
+                            <img src="${project.image}" alt="${project.title}" onerror="handleImageError(this)">
+                        </div>
+                        <div class="project-info">
+                            <div class="project-category">${getCategoryDisplay(project.category)}</div>
+                            <div class="project-title">${project.title}</div>
+                            <div class="project-location">📍 ${project.location}</div>
+                            <div class="project-desc">${project.description}</div>
+                            <div class="project-feature">
+                                ${project.features.map(f => `<span>✓ ${f}</span>`).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+                
+                // Re-attach image error handlers
+                document.querySelectorAll('.project-img img').forEach(img => {
+                    img.addEventListener('error', function() {
+                        handleImageError(this);
+                    });
+                });
+            }
+        }
+
+        // Filter event listeners
+        filterChips.forEach(chip => {
+            chip.addEventListener('click', () => {
+                filterChips.forEach(c => c.classList.remove('active'));
+                chip.classList.add('active');
+                activeFilter = chip.getAttribute('data-category');
+                renderProjects();
+            });
+        });
+
+        // Mobile menu toggle functionality (matching home page)
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navUl = document.querySelector('nav ul');
+        if (menuToggle && navUl) {
+            menuToggle.addEventListener('click', () => {
+                navUl.classList.toggle('open');
+                const spans = menuToggle.querySelectorAll('span');
+                if (navUl.classList.contains('open')) {
+                    spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+                    spans[1].style.opacity = '0';
+                    spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+                } else {
+                    spans[0].style.transform = 'none';
+                    spans[1].style.opacity = '1';
+                    spans[2].style.transform = 'none';
+                }
+            });
+        }
+
+        // Close mobile menu when clicking a link
+        const navLinks = document.querySelectorAll('nav ul li a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (navUl && navUl.classList.contains('open')) {
+                    navUl.classList.remove('open');
+                    if (menuToggle) {
+                        const spans = menuToggle.querySelectorAll('span');
+                        spans[0].style.transform = 'none';
+                        spans[1].style.opacity = '1';
+                        spans[2].style.transform = 'none';
+                    }
+                }
+            });
+        });
+
+        // Initial render
+        renderProjects();
+
+        // Loader removal
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader');
+            if (loader) {
+                setTimeout(() => {
+                    loader.style.opacity = '0';
+                    setTimeout(() => {
+                        loader.style.display = 'none';
+                    }, 300);
+                }, 400);
+            }
+        });
+    </script>
+</body>
+</html>
